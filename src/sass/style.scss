@@ -1,0 +1,40 @@
+@import 'normalize';
+
+@import 'variables';
+
+@import "variables.scss";
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+
+body {
+  padding: 0;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Georgia', sans-serif;
+  font-weight: 400;
+  background-color: #cdcdcd;
+  font-size: $main-font-size;
+  line-height: $main-line-height;
+  transition: all 0.25s linear
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
