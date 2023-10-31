@@ -19,13 +19,17 @@ const FormCallBack = () => {
   ]
 
   const [formData, setFormData] = useState(baseState);
-  const [isDisabled, setIsDisabled] = useState(true)
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [isValid, setIsValid] = useState(false);
   console.log(isDisabled)
-  console.log(formData)
+  console.log(isValid)
+
 
   const handleOnChangeInput = (e: React.SyntheticEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-
-    console.log(e.currentTarget.id)
+    if (+e.currentTarget.id === 1) {
+      const isValidField: boolean = isValidEmail(e.currentTarget.value.trim().toLowerCase());
+      setIsValid(isValidField);
+    }
     const fields = [...formData];
     fields[+e.currentTarget.id]['description'] = e.currentTarget.value;
     setFormData(fields);
@@ -42,7 +46,7 @@ const FormCallBack = () => {
         Accept: 'application.json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ "name":formData[0].description,"email":formData[1].description,"number":formData[2].description, "text":formData[3].description })
+      body: JSON.stringify({ "name": formData[0].description, "email": formData[1].description, "number": formData[2].description, "text": formData[3].description })
     }).then((response) => {
       if (response.ok) {
 
@@ -74,6 +78,8 @@ const FormCallBack = () => {
 
   }
 
+
+
   return (
     <div className="main-block-form">
       <h2>Form call back</h2>
@@ -94,7 +100,7 @@ const FormCallBack = () => {
           <textarea required id='3' onChange={(e) => handleOnChangeInput(e)} value={formData[3].description} className={`base-style-textarea ${formData[3].description.length === 0 ? 'errorBorder' : ''} `} placeholder="Type some text..."></textarea>
           {formData[3].description.length === 0 ? (<span style={{ color: 'red' }}>{formData[3].title} is required</span>) : ('')}
         </div>
-        <button disabled={isDisabled} className={isDisabled ? 'base-style-button-dis' : "base-style-button"} type="submit">Submit</button>
+        <button disabled={isDisabled && !isValid} className={isDisabled ? 'base-style-button-dis' : "base-style-button"} type="submit">Submit</button>
       </form>
 
     </div>
